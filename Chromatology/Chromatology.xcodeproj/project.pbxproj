@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		BA970F091C891A6200E69993 /* Chromatology.h in Headers */ = {isa = PBXBuildFile; fileRef = BA970F081C891A6200E69993 /* Chromatology.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA970F101C891A6200E69993 /* Chromatology.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA970F051C891A6200E69993 /* Chromatology.framework */; };
-		BA970F151C891A6200E69993 /* ChromatologyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA970F141C891A6200E69993 /* ChromatologyTests.m */; };
+		BE4556B91C891B5E004CEC20 /* UIColor+Chromatology.h in Headers */ = {isa = PBXBuildFile; fileRef = BE4556B71C891B5E004CEC20 /* UIColor+Chromatology.h */; };
+		BE4556BA1C891B5E004CEC20 /* UIColor+Chromatology.m in Sources */ = {isa = PBXBuildFile; fileRef = BE4556B81C891B5E004CEC20 /* UIColor+Chromatology.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,8 +28,9 @@
 		BA970F081C891A6200E69993 /* Chromatology.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chromatology.h; sourceTree = "<group>"; };
 		BA970F0A1C891A6200E69993 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA970F0F1C891A6200E69993 /* ChromatologyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChromatologyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA970F141C891A6200E69993 /* ChromatologyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChromatologyTests.m; sourceTree = "<group>"; };
 		BA970F161C891A6200E69993 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE4556B71C891B5E004CEC20 /* UIColor+Chromatology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Chromatology.h"; sourceTree = "<group>"; };
+		BE4556B81C891B5E004CEC20 /* UIColor+Chromatology.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Chromatology.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,8 @@
 			children = (
 				BA970F081C891A6200E69993 /* Chromatology.h */,
 				BA970F0A1C891A6200E69993 /* Info.plist */,
+				BE4556B71C891B5E004CEC20 /* UIColor+Chromatology.h */,
+				BE4556B81C891B5E004CEC20 /* UIColor+Chromatology.m */,
 			);
 			path = Chromatology;
 			sourceTree = "<group>";
@@ -80,7 +84,6 @@
 		BA970F131C891A6200E69993 /* ChromatologyTests */ = {
 			isa = PBXGroup;
 			children = (
-				BA970F141C891A6200E69993 /* ChromatologyTests.m */,
 				BA970F161C891A6200E69993 /* Info.plist */,
 			);
 			path = ChromatologyTests;
@@ -93,6 +96,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4556B91C891B5E004CEC20 /* UIColor+Chromatology.h in Headers */,
 				BA970F091C891A6200E69993 /* Chromatology.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4556BA1C891B5E004CEC20 /* UIColor+Chromatology.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +205,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA970F151C891A6200E69993 /* ChromatologyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +378,7 @@
 				BA970F1B1C891A6200E69993 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BA970F1C1C891A6200E69993 /* Build configuration list for PBXNativeTarget "ChromatologyTests" */ = {
 			isa = XCConfigurationList;
@@ -382,6 +387,7 @@
 				BA970F1E1C891A6200E69993 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
