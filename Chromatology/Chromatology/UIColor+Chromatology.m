@@ -11,7 +11,31 @@
 
 @implementation UIColor (Chromatology)
 
-static dispatch_queue_t nillingQueue;
+- (UIColor *)saturate {
+    return [self toSaturation:1.0];
+}
+
+- (UIColor *)toSaturation:(CGFloat)saturation {
+    if (saturation > 1.0) {
+        saturation = 1.0;
+    } else if (saturation < 0.0) {
+        return [UIColor blackColor];
+    }
+    CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
+    [self getRed:&red green:&green blue:&blue alpha:&alpha];
+    CGFloat max = MAX(red, MAX(green, blue));
+    if (max == 0.0) {
+        red = 1.0, green = 1.0, blue = 1.0;
+    } else {
+        red = red/max * saturation;
+        green = green/max * saturation;
+        blue = blue/max * saturation;
+    }
+    return [UIColor colorWithRed:red
+                           green:green
+                            blue:blue
+                           alpha:alpha];
+}
 
 - (UIColor *)mixedWithColor:(UIColor *)other {
     CGFloat selfRed = 0.0,  selfGreen = 0.0,  selfBlue = 0.0,  selfAlpha = 0.0,
@@ -76,6 +100,7 @@ static dispatch_queue_t nillingQueue;
     // In order to make sure `&result` is pointing to something by the time it gets used we need to keep a
     // reference to it. The whole thing is a beautiful hack.
     static dispatch_once_t onceToken;
+    static dispatch_queue_t nillingQueue;
     dispatch_once(&onceToken, ^{
         nillingQueue = dispatch_queue_create("com.nicknacklabs.chromatology.nilling", DISPATCH_QUEUE_CONCURRENT);
     });

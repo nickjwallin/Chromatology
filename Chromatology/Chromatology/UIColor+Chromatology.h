@@ -10,6 +10,9 @@
 
 @interface UIColor (Chromatology)
 
+- (UIColor *)saturate;
+- (UIColor *)toSaturation:(CGFloat)saturation;
+
 @end
 
 // Let's pretend that UIColor implements these.
