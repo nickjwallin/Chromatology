@@ -10,6 +10,11 @@
 
 @interface UIColor (Chromatology)
 
+@end
+
+// Let's pretend that UIColor implements these.
+@interface UIColor()
+
 - (UIColor *)blackColor;      // 0.0 white
 - (UIColor *)darkGrayColor;   // 0.333 white
 - (UIColor *)lightGrayColor;  // 0.667 white

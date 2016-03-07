@@ -11,8 +11,7 @@
 
 @implementation UIColor (Chromatology)
 
-#define AntiARCRetain(...) void *retainedThing = (__bridge_retained void *)__VA_ARGS__; retainedThing = retainedThing
-#define AntiARCRelease(...) void *retainedThing = (__bridge void *) __VA_ARGS__; id unretainedThing = (__bridge_transfer id)retainedThing; unretainedThing = nil
+static dispatch_queue_t nillingQueue;
 
 - (UIColor *)mixedWithColor:(UIColor *)other {
     CGFloat selfRed = 0.0,  selfGreen = 0.0,  selfBlue = 0.0,  selfAlpha = 0.0,
@@ -26,8 +25,8 @@
 }
 
 // A prototypical method to base other method signatures off of.
-- (UIColor *)redColor {
-    return [self mixedWithColor:[UIColor redColor]];
+- (UIColor *)chroma_testColor {
+    return nil;
 }
 
 // SWIZZLING!
@@ -63,7 +62,7 @@
 - (NSMethodSignature *)chroma_methodSignatureForSelector:(SEL)aSelector {
     if ([UIColor respondsToSelector:aSelector] &&
         [[UIColor performSelector:aSelector] isKindOfClass:[UIColor class]]) {
-        return [self chroma_methodSignatureForSelector:@selector(redColor)];
+        return [self chroma_methodSignatureForSelector:@selector(chroma_testColor)];
     } else {
         return [self chroma_methodSignatureForSelector:aSelector];
     }
@@ -71,11 +70,17 @@
 
 - (void)chroma_forwardInvocation:(NSInvocation *)anInvocation {
     SEL aSelector = [anInvocation selector];
-    UIColor *result = [self mixedWithColor:[UIColor performSelector:aSelector]];
-    AntiARCRetain(result);
+    __block UIColor *result = [self mixedWithColor:[UIColor performSelector:aSelector]];
     [anInvocation setReturnValue:&result];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        AntiARCRelease(result);
+    // So here's the deal. `result` isn't retained between the time this method returns and the time it's used.
+    // In order to make sure `&result` is pointing to something by the time it gets used we need to keep a
+    // reference to it. The whole thing is a beautiful hack.
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        nillingQueue = dispatch_queue_create("com.nicknacklabs.chromatology.nilling", DISPATCH_QUEUE_CONCURRENT);
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), nillingQueue, ^{
+        result = nil;
     });
 }
 
