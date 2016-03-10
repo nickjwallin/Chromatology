@@ -7,6 +7,7 @@
 //
 
 #import "UIColor+Chromatology.h"
+#import "NNLColor.h"
 #include <objc/objc-runtime.h>
 
 @implementation UIColor (Chromatology)
@@ -94,8 +95,10 @@
 
 - (void)chroma_forwardInvocation:(NSInvocation *)anInvocation {
     SEL aSelector = [anInvocation selector];
-    __block UIColor *result = [self mixedWithColor:[UIColor performSelector:aSelector]];
-    [anInvocation setReturnValue:&result];
+    __block NNLColor *nnlColor = [[NNLColor alloc] initWithInitialColor:self];
+    UIColor *result = [self mixedWithColor:[UIColor performSelector:aSelector]];
+    [nnlColor addColor:result];
+    [anInvocation setReturnValue:&nnlColor];
     // So here's the deal. `result` isn't retained between the time this method returns and the time it's used.
     // In order to make sure `&result` is pointing to something by the time it gets used we need to keep a
     // reference to it. The whole thing is a beautiful hack.
@@ -105,7 +108,7 @@
         nillingQueue = dispatch_queue_create("com.nicknacklabs.chromatology.nilling", DISPATCH_QUEUE_CONCURRENT);
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), nillingQueue, ^{
-        result = nil;
+        nnlColor = nil;
     });
 }
 
